@@ -1,7 +1,7 @@
 import * as constants from '../constants';
 
 const INITIAL_STATE = {
-    todos: [],
+    data: [],
 }
 
 const todosReducer = (state = INITIAL_STATE, action) => {
@@ -9,7 +9,7 @@ const todosReducer = (state = INITIAL_STATE, action) => {
         case constants.SET_TODOS: {
             return{
                 ...state,
-                todos: action.data
+                data: action.data
             }
         }
 

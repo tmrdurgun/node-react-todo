@@ -1,4 +1,4 @@
-export const request = async (url, method, data = false, headerOptions) => {
+export const request = async (url, method, data = undefined, headerOptions) => {
     try {
       const headers = headerOptions || {
         Accept: 'application/json',

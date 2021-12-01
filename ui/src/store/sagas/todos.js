@@ -12,11 +12,13 @@ import * as constants from '../constants';
 import * as todoItemActions from '../actions/todos';
 
 function* getTodos() {
-    const result = yield call(request, "http://localhost:3002/todos", 'get', true);
+    const result = yield call(request, "http://localhost:3002/todo/list", 'GET');
+
+    console.log('result: ', result);
 
     try {
-        if (result !== 'invalid') {
-            yield put(todoItemActions.settodos(result.data));
+        if (result.success) {
+            yield put(todoItemActions.setTodos(result.data));
         } else {
             throw new Error();
         }

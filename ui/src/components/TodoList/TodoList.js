@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {Container} from '@material-ui/core';
+import {Container, Button} from '@material-ui/core';
 
 import {
   getTodos,
@@ -15,6 +15,8 @@ import {
 
 import TodoItem from '../TodoItem/TodoItem';
 
+import './style.scss';
+
 class todos extends Component {
     constructor(props){
         super(props);
@@ -22,7 +24,9 @@ class todos extends Component {
         this.state = {
             todos: null,
             selectedRow: null,
-            searchText: ''
+            searchText: '',
+            inputData: '',
+            inputDescription: ''
         }
     }
 
@@ -30,21 +34,60 @@ class todos extends Component {
       this.props.getTodos();
     }
 
+    handleInputChange = (e) => {
+      this.setState({ inputData: e.target.value});
+  }
+  handleTextAreaChange = (e) => {
+    this.setState({ inputDescription: e.target.value});
+  }
+  
+  handleAddTaskClick = () => {
+    const { inputData, inputDescription } = this.state;
+
+    console.log('ADD NEW TASK: ', {
+      title: inputData,
+      desc: inputDescription
+    });
+
+      // this.props.handleTaskAddition(inputData, inputDescription);
+      this.setState({ inputData: '', inputDescription: ''});
+      
+  }
+
     render(){
-        const { searchText } = this.state;
+        const { searchText, inputData, inputDescription } = this.state;
         const { todos } = this.props;
+
+        console.log(todos);
 
         return(
             <>
               <Container>
               TODO LIST
 
-              <TodoItem task={{
-                id: 'asdasd123asd',
-                title: 'Çöp atılacak',
-                desc: 'acil',
-                status: 1
-              }} />
+              <div className="add-task-container">
+            <input 
+                onChange={(e) => this.handleInputChange(e)}
+                className="add-task-input"
+                value={inputData}
+                type="text"
+                placeholder="Add a task"
+            />
+            <div className="add-task-button-container">
+                <button onClick={() => this.handleAddTaskClick()} className="button">Add</button>
+            </div>
+        </div>
+            <textarea className="task-description"
+                onChange={(e) => this.handleTextAreaChange(e)}
+                value={inputDescription}
+                placeholder="Add a description"
+            
+            ></textarea>
+
+{todos.length > 0 && todos.map(item => (
+  <TodoItem task={item} key={item.id} />
+))}
+
             </Container>
             </>
         )

@@ -9,25 +9,25 @@ router.post('/create', async (req, res, next) => {
   try {
     const todoItem = await todoModel.findOne({ title: req.body.title });
 
-    if (todoItem) throw Error('This item has been created before.');
+    if (todoItem) throw Error('This task has been created before.');
 
-    const id = await helperFunctions.generateIdWithPrefix(14, 'TODO_');
+    const id = await helperFunctions.generateIdWithPrefix(14, 'TASK_');
 
     const result = await todoModel.create({
       id,
       ...req.body
     });
 
-    if(!result) throw new Error('Error ouccured when retrieving todos');
+    if(!result) throw new Error('Error ouccured while creating new task');
 
     res.status(200).send({
       success: true,
       data: result,
-      message: 'New To-Do item created'
+      message: 'New task created'
     })
 
   } catch (error) {
-    console.log(`ERROR (TODO CREATE): ${error.toString()}`);
+    console.log(`ERROR (TASK CREATE): ${error.toString()}`);
 
     res.status(400).send({
       success: false,
@@ -48,11 +48,11 @@ router.get('/list', async (req, res, next) => {
     })
 
   } catch (error) {
-    console.log(`ERROR (TODO LIST): ${error.toString()}`);
+    console.log(`ERROR (TASK LIST): ${error.toString()}`);
 
     res.status(500).send({
       success: false,
-      message: 'Error ouccured when retrieving todos'
+      message: 'Error ouccured when retrieving tasks'
     });
   }
   

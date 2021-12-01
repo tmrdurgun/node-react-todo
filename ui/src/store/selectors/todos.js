@@ -4,5 +4,5 @@ const domain = (state) => state;
 
 export const selectTodos = () => createSelector(
   domain,
-  (substate) => substate.todos.todos,
+  (substate) => substate.todos.data,
 );
