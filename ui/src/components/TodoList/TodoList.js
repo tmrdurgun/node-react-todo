@@ -39,7 +39,12 @@ class todos extends Component {
               <Container>
               TODO LIST
 
-              <TodoItem />
+              <TodoItem task={{
+                id: 'asdasd123asd',
+                title: 'Çöp atılacak',
+                desc: 'acil',
+                status: 1
+              }} />
             </Container>
             </>
         )

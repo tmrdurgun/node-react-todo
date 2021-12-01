@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Paper } from '@material-ui/core';
 import './style.scss';
 
+import {CloseRounded, InfoRounded} from '@material-ui/icons';
+
 class todoItem extends Component {
     constructor(props){
         super(props);
@@ -11,18 +13,42 @@ class todoItem extends Component {
         }
     }
 
+    handleTaskDetailsClick = (task) => {
+        console.log(task);
+    }
+
     render(){
-        const { todoItem } = this.props;
-        console.log(todoItem);
+        const { task } = this.props;
+        console.log(task);
 
         return(
             <>
-                {todoItem && <Paper className="todoItem" data-testid={`todoItem-${todoItem.id || '1'}`}>
-                    <h4 className="title">{todoItem.title}</h4>
-                    <div className="desc">
-                        {todoItem.desc}
-                    </div>
-                </Paper>}
+                {task && <div className="task-container" data-testid={`todoItem-${task.id || '1'}`} onClick={(e) => {
+            e.stopPropagation();
+            this.handleTaskClick(task)
+        }
+         } style={task.status ? {borderLeft: "6px solid chartreuse"} : {}}>
+            <div className="task-title" >
+                {task.title}
+            </div>
+
+            <div className="buttons-container">
+                <button className="see-task-details-button" onClick={ (e) => {
+                    e.stopPropagation();
+                    this.handleTaskDetailsClick();
+                    }}>
+                    <InfoRounded />
+                </button>
+                <button className="remove-task-button" onClick={ (e) => {
+                    e.stopPropagation();
+                    this.handleTaskDeletion(task);
+                }}>
+                    <CloseRounded />
+                </button>
+            </div>
+        </div>}
+
+                
             </>
         )
     }
