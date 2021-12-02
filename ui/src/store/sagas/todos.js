@@ -58,3 +58,49 @@ export function* createTodoWatcher() {
         yield call(createTodo, action.data);
     }
 }
+
+/* EDIT */
+function* editTodo(todo) {
+    const result = yield call(request, "http://localhost:3002/todo/edit", 'POST', JSON.stringify(todo));
+
+    try {
+        if (result.success) {
+            yield put(todoItemActions.getTodos());
+        } else {
+            throw new Error();
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+
+export function* editTodoWatcher() {
+    while (true) {
+        const action = yield take(constants.EDIT_TODO);
+        yield call(editTodo, action.data);
+    }
+}
+
+/* REMOVE */
+function* removeTodo(todo) {
+    const result = yield call(request, "http://localhost:3002/todo/remove", 'POST', JSON.stringify(todo));
+
+    try {
+        if (result.success) {
+            yield put(todoItemActions.getTodos());
+        } else {
+            throw new Error();
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+
+export function* removeTodoWatcher() {
+    while (true) {
+        const action = yield take(constants.REMOVE_TODO);
+        yield call(removeTodo, action.data);
+    }
+}

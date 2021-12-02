@@ -5,7 +5,9 @@ import {Container, Button} from '@material-ui/core';
 
 import {
   getTodos,
-  createTodo
+  createTodo,
+  editTodo,
+  removeTodo
 } from '../../store/actions';
 
 import { createStructuredSelector } from 'reselect';
@@ -65,9 +67,17 @@ class todos extends Component {
     };
 
     if(!selectedTask) this.props.createTodo(params);
-    // this.props.editTodo(params);
+    this.props.editTodo({
+      id: selectedTask.id,
+      ...params
+    });
 
-    console.log('TASK ACTION: ', params);
+    this.resetInputs();
+  }
+
+  handleRemoveTask = (id) => {
+
+    this.props.removeTodo({ id });
 
     this.resetInputs();
   }
@@ -109,7 +119,13 @@ class todos extends Component {
               ></textarea>
 
               {todos.length > 0 && todos.map(item => (
-                <TodoItem task={item} key={item.id} handleTaskClick={this.handleTaskClick} active={selectedTask && selectedTask.id === item.id} />
+                <TodoItem 
+                task={item} 
+                key={item.id} 
+                handleTaskClick={this.handleTaskClick} 
+                active={selectedTask && selectedTask.id === item.id}
+                handleRemoveTask={this.handleRemoveTask}
+                />
               ))}
 
               </Container>
@@ -126,7 +142,9 @@ const mapDispatchToProps = dispatch => (
   (
     bindActionCreators({
       getTodos,
-      createTodo
+      createTodo,
+      editTodo,
+      removeTodo
     }, dispatch)
   )
 );

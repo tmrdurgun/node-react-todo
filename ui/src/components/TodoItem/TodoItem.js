@@ -25,6 +25,10 @@ class todoItem extends Component {
         this.setState({ isDone: checked });
     }
 
+    handleClickRemove = (task) => {
+        this.props.handleRemoveTask(task.id);
+    }
+    
     render(){
         const { task, active } = this.props;
         const { isDone } = this.state;
@@ -58,7 +62,7 @@ class todoItem extends Component {
                         </button>
                         <button className="remove-task-button" onClick={ (e) => {
                             e.stopPropagation();
-                            this.handleTaskDeletion(task);
+                            this.handleClickRemove(task);
                         }}>
                             <CloseRounded />
                         </button>
