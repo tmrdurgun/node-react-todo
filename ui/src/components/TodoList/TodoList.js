@@ -58,7 +58,7 @@ class todos extends Component {
     this.setState({title: '', desc: '', selectedTask: null});
   }
   
-  handleAddTaskClick = () => {
+  handleTaskAction = (task = undefined) => {
     const { title, desc, selectedTask } = this.state;
 
     const params = {
@@ -66,11 +66,25 @@ class todos extends Component {
       desc
     };
 
-    if(!selectedTask) this.props.createTodo(params);
-    this.props.editTodo({
-      id: selectedTask.id,
-      ...params
-    });
+    if(!selectedTask && !task) {
+      this.props.createTodo(params);
+    } else {
+
+      if(task) {
+        this.props.editTodo({
+          id: task.id,
+          title: task.title,
+          desc: task.desc,
+          status: !task.status
+        });
+      } else {
+        this.props.editTodo({
+          id: selectedTask.id,
+          ...params
+        });
+      }
+      
+    }
 
     this.resetInputs();
   }
@@ -78,6 +92,13 @@ class todos extends Component {
   handleRemoveTask = (id) => {
 
     this.props.removeTodo({ id });
+
+    this.resetInputs();
+  }
+
+  handleUpdateStatus = (task) => {
+    console.log(task);
+    // this.props.updateTaskStatus(task);
 
     this.resetInputs();
   }
@@ -108,7 +129,7 @@ class todos extends Component {
                       placeholder="Add a task"
                   />
                   <div className="add-task-button-container">
-                      <button onClick={() => this.handleAddTaskClick()} className="button">{selectedTask ? 'Edit' : 'Add'}</button>
+                      <button onClick={() => this.handleTaskAction()} className="button">{selectedTask ? 'Edit' : 'Add'}</button>
                   </div>
               </div>
               <textarea className="task-description"
@@ -125,6 +146,7 @@ class todos extends Component {
                 handleTaskClick={this.handleTaskClick} 
                 active={selectedTask && selectedTask.id === item.id}
                 handleRemoveTask={this.handleRemoveTask}
+                handleUpdateStatus={this.handleTaskAction}
                 />
               ))}
 

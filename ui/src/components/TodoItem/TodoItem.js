@@ -21,8 +21,9 @@ class todoItem extends Component {
         this.props.handleTaskClick(task);
     }
 
-    handleCheck = (checked, id) => {
+    handleCheck = (checked, task) => {
         this.setState({ isDone: checked });
+        this.props.handleUpdateStatus(task);
     }
 
     handleClickRemove = (task) => {
@@ -38,10 +39,10 @@ class todoItem extends Component {
             <>
                 {task && <div className="task-container" data-testid={`todoItem-${task.id || '1'}`} onClick={(e) => {
                     e.stopPropagation();
-                    this.handleTaskClick(task)
+                    if(task.status) this.handleTaskClick(task);
                 }
-                } style={active ? {borderLeft: "6px solid chartreuse"} : {}}>
-                    <div className="task-title" >
+                } style={active ? {borderLeft: "6px solid #f4cc25"} : {}}>
+                    <div className="task-title" style={{textDecoration: task.status ? 'none' : 'line-through'}}>
                         {task.title}
                     </div>
 
@@ -51,7 +52,7 @@ class todoItem extends Component {
                         checked={isDone}
                         value={task.id}
                         className="yellowCheckbox"
-                        onChange={(e) => this.handleCheck(e.target.checked, task.id)}
+                        onChange={(e) => this.handleCheck(e.target.checked, task)}
                         onClick={(e) => e.stopPropagation()}
                     />
                         <button className="see-task-details-button" onClick={ (e) => {

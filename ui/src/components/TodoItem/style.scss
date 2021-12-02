@@ -12,7 +12,7 @@ $completeClr: #5d3ebc;
     cursor: pointer;
 
     &:hover{
-        border-left: 6px solid chartreuse;
+        border-left: 6px solid #f4cc25;
         transform: translateX(10);
         transition: all 150ms;
     }
@@ -27,7 +27,36 @@ $completeClr: #5d3ebc;
     border: none;
     background-color: #444;
     font-size: 20px;
-    color: chartreuse;
+    color: #f4cc25;
     margin: 0 5px;
     cursor: pointer;
+}
+
+.MuiCheckbox-colorSecondary {
+    color: #f4cc25 !important;
+}
+
+.MuiInputBase-root,
+.MuiFormControlLabel-label
+{
+    color: rgb(46, 46, 46) !important;
+    
+    *{
+        border: none !important;
+        box-shadow: none !important;
+        outline: none;
+        outline-color: transparent;
+    }
+}
+
+.MuiInput-underline {
+    border-bottom-style: none !important;
+}
+
+.MuiSelect-iconOutlined{
+    display: none !important;
+}
+
+.buttons-container{
+    display: flex;
 }

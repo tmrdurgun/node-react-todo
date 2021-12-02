@@ -15,7 +15,8 @@ router.post('/create', async (req, res) => {
 
     const result = await todoModel.create({
       id,
-      ...req.body
+      ...req.body,
+      status: 1
     });
 
     if(!result) throw new Error('Error ouccured while creating new task');
