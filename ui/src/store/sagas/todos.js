@@ -11,6 +11,7 @@ import * as constants from '../constants';
 
 import * as todoItemActions from '../actions/todos';
 
+/* LIST */
 function* getTodos() {
     const result = yield call(request, "http://localhost:3002/todo/list", 'GET');
 
@@ -32,5 +33,28 @@ export function* getTodosWatcher() {
     while (true) {
         const action = yield take(constants.GET_TODOS);
         yield call(getTodos, action);
+    }
+}
+
+/* CREATE */
+function* createTodo(todo) {
+    const result = yield call(request, "http://localhost:3002/todo/create", 'POST', JSON.stringify(todo));
+
+    try {
+        if (result.success) {
+            yield put(todoItemActions.getTodos());
+        } else {
+            throw new Error();
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+
+export function* createTodoWatcher() {
+    while (true) {
+        const action = yield take(constants.CREATE_TODO);
+        yield call(createTodo, action.data);
     }
 }

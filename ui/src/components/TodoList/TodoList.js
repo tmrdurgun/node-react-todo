@@ -5,6 +5,7 @@ import {Container, Button} from '@material-ui/core';
 
 import {
   getTodos,
+  createTodo
 } from '../../store/actions';
 
 import { createStructuredSelector } from 'reselect';
@@ -44,12 +45,14 @@ class todos extends Component {
   handleAddTaskClick = () => {
     const { inputData, inputDescription } = this.state;
 
-    console.log('ADD NEW TASK: ', {
+    const params = {
       title: inputData,
       desc: inputDescription
-    });
+    };
 
-      // this.props.handleTaskAddition(inputData, inputDescription);
+    console.log('ADD NEW TASK: ', params);
+
+      this.props.createTodo(params);
       this.setState({ inputData: '', inputDescription: ''});
       
   }
@@ -57,8 +60,6 @@ class todos extends Component {
     render(){
         const { searchText, inputData, inputDescription } = this.state;
         const { todos } = this.props;
-
-        console.log(todos);
 
         return(
             <>
@@ -102,6 +103,7 @@ const mapDispatchToProps = dispatch => (
   (
     bindActionCreators({
       getTodos,
+      createTodo
     }, dispatch)
   )
 );
