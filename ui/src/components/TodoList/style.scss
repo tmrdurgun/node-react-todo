@@ -1,7 +1,18 @@
+.content-container{
+    padding-top: 5%;
+
+    .page-title{
+        color: #f6f6f6;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+        text-align: left;
+    }
+}
+
 .add-task-container {
     margin: 15px 0;
     width: 100%;
     display: flex;
+    
 }
 
 .add-task-input {
@@ -10,9 +21,12 @@
     border-radius: 5px;
     border: none;
     flex: 2;
-    background-color: #444;
     color: #eee;
     font-size: 16px;
+    background-color: rgba(0,0,0,0.4);
+    &::placeholder {
+        color: #fff;
+    }
 }
 
 .task-description {
@@ -20,7 +34,10 @@
     width: 100%; 
     padding: 10px;
     height: 100px;
-    background-color: #444;
+    background-color: rgba(0,0,0,0.4);
+    &::placeholder {
+        color: #fff;
+    }
     color: #eee;
     border-radius: 5px;
     border: none;

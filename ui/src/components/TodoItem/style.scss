@@ -1,7 +1,10 @@
 $completeClr: #5d3ebc;
 
 .task-container {
-    background-color: #444;
+    background-color: rgba(0,0,0,0.4);
+    &::placeholder {
+        color: #fff;
+    }
     margin: 8px 0;
     padding: 15px 20px;
     display: flex;
@@ -25,7 +28,10 @@ $completeClr: #5d3ebc;
 .remove-task-button,
 .see-task-details-button {
     border: none;
-    background-color: #444;
+    background-color: transparent;
+    &::placeholder {
+        color: #fff;
+    }
     font-size: 20px;
     color: #f4cc25;
     margin: 0 5px;

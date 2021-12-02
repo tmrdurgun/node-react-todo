@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {Container, Button} from '@material-ui/core';
+import {Container, Grid} from '@material-ui/core';
 
 import {
   getTodos,
@@ -117,39 +117,40 @@ class todos extends Component {
 
         return(
             <>
-              <Container>
-              TODO LIST
+            <Container maxWidth="md" className="content-container">
+                <h1 className="page-title">ALWAYS SOMETHING TO-DO!</h1>
+                <div className="add-task-container">
+                    <input 
+                        onChange={(e) => this.handleInputChange(e)}
+                        className="add-task-input"
+                        value={title}
+                        type="text"
+                        placeholder="Add a task"
+                    />
+                    <div className="add-task-button-container">
+                        <button onClick={() => this.handleTaskAction()} className="button">{selectedTask ? 'Edit' : 'Add'}</button>
+                    </div>
+                </div>
 
-              <div className="add-task-container">
-                  <input 
-                      onChange={(e) => this.handleInputChange(e)}
-                      className="add-task-input"
-                      value={title}
-                      type="text"
-                      placeholder="Add a task"
+                <div className="add-task-container">
+                    <textarea className="task-description"
+                        onChange={(e) => this.handleTextAreaChange(e)}
+                        value={desc}
+                        placeholder="Add a description"
+                    ></textarea>
+                </div>
+                
+
+                {todos.length > 0 && todos.map(item => (
+                  <TodoItem 
+                  task={item} 
+                  key={item.id} 
+                  handleTaskClick={this.handleTaskClick} 
+                  active={selectedTask && selectedTask.id === item.id}
+                  handleRemoveTask={this.handleRemoveTask}
+                  handleUpdateStatus={this.handleTaskAction}
                   />
-                  <div className="add-task-button-container">
-                      <button onClick={() => this.handleTaskAction()} className="button">{selectedTask ? 'Edit' : 'Add'}</button>
-                  </div>
-              </div>
-              <textarea className="task-description"
-                  onChange={(e) => this.handleTextAreaChange(e)}
-                  value={desc}
-                  placeholder="Add a description"
-              
-              ></textarea>
-
-              {todos.length > 0 && todos.map(item => (
-                <TodoItem 
-                task={item} 
-                key={item.id} 
-                handleTaskClick={this.handleTaskClick} 
-                active={selectedTask && selectedTask.id === item.id}
-                handleRemoveTask={this.handleRemoveTask}
-                handleUpdateStatus={this.handleTaskAction}
-                />
-              ))}
-
+                ))}
               </Container>
             </>
         )
