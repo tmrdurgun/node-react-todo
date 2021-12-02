@@ -9,7 +9,13 @@ $completeClr: #5d3ebc;
     justify-content: space-between;
     color: #eee;
     align-items: center;
-    
+    cursor: pointer;
+
+    &:hover{
+        border-left: 6px solid chartreuse;
+        transform: translateX(10);
+        transition: all 150ms;
+    }
 }
 
 .task-title {

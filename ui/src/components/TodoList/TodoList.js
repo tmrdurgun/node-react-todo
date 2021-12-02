@@ -19,46 +19,69 @@ import TodoItem from '../TodoItem/TodoItem';
 import './style.scss';
 
 class todos extends Component {
-    constructor(props){
-        super(props);
+  constructor(props){
+    super(props);
 
-        this.state = {
-            todos: null,
-            selectedRow: null,
-            searchText: '',
-            inputData: '',
-            inputDescription: ''
-        }
+    this.state = {
+        todos: null,
+        selectedTask: null,
+        title: '',
+        desc: ''
     }
-
-    async componentDidMount(){
-      this.props.getTodos();
-    }
-
-    handleInputChange = (e) => {
-      this.setState({ inputData: e.target.value});
   }
+
+  async componentDidMount(){
+    this.props.getTodos();
+  }
+
+  handleInputChange = (e) => {
+    this.setState({ title: e.target.value}, () => {
+      this.checkResetState();
+    });
+  }
+
   handleTextAreaChange = (e) => {
-    this.setState({ inputDescription: e.target.value});
+    this.setState({ desc: e.target.value}, () => {
+      this.checkResetState();
+    });
+  }
+
+  checkResetState = () => {
+    const { title, desc } = this.state;
+
+    if(title === '' && desc === '') this.resetInputs();
+  }
+
+  resetInputs = () => {
+    this.setState({title: '', desc: '', selectedTask: null});
   }
   
   handleAddTaskClick = () => {
-    const { inputData, inputDescription } = this.state;
+    const { title, desc, selectedTask } = this.state;
 
     const params = {
-      title: inputData,
-      desc: inputDescription
+      title,
+      desc
     };
 
-    console.log('ADD NEW TASK: ', params);
+    if(!selectedTask) this.props.createTodo(params);
+    // this.props.editTodo(params);
 
-      this.props.createTodo(params);
-      this.setState({ inputData: '', inputDescription: ''});
-      
+    console.log('TASK ACTION: ', params);
+
+    this.resetInputs();
+  }
+
+  handleTaskClick = (task) => {
+    this.setState({
+      title: task.title, 
+      desc: task.desc,
+      selectedTask: task
+    })
   }
 
     render(){
-        const { searchText, inputData, inputDescription } = this.state;
+        const { selectedTask, title, desc } = this.state;
         const { todos } = this.props;
 
         return(
@@ -67,29 +90,29 @@ class todos extends Component {
               TODO LIST
 
               <div className="add-task-container">
-            <input 
-                onChange={(e) => this.handleInputChange(e)}
-                className="add-task-input"
-                value={inputData}
-                type="text"
-                placeholder="Add a task"
-            />
-            <div className="add-task-button-container">
-                <button onClick={() => this.handleAddTaskClick()} className="button">Add</button>
-            </div>
-        </div>
-            <textarea className="task-description"
-                onChange={(e) => this.handleTextAreaChange(e)}
-                value={inputDescription}
-                placeholder="Add a description"
-            
-            ></textarea>
+                  <input 
+                      onChange={(e) => this.handleInputChange(e)}
+                      className="add-task-input"
+                      value={title}
+                      type="text"
+                      placeholder="Add a task"
+                  />
+                  <div className="add-task-button-container">
+                      <button onClick={() => this.handleAddTaskClick()} className="button">{selectedTask ? 'Edit' : 'Add'}</button>
+                  </div>
+              </div>
+              <textarea className="task-description"
+                  onChange={(e) => this.handleTextAreaChange(e)}
+                  value={desc}
+                  placeholder="Add a description"
+              
+              ></textarea>
 
-{todos.length > 0 && todos.map(item => (
-  <TodoItem task={item} key={item.id} />
-))}
+              {todos.length > 0 && todos.map(item => (
+                <TodoItem task={item} key={item.id} handleTaskClick={this.handleTaskClick} active={selectedTask && selectedTask.id === item.id} />
+              ))}
 
-            </Container>
+              </Container>
             </>
         )
     }

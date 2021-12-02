@@ -17,12 +17,16 @@ class todoItem extends Component {
         console.log(task);
     }
 
+    handleTaskClick = (task) => {
+        this.props.handleTaskClick(task);
+    }
+
     handleCheck = (checked, id) => {
         this.setState({ isDone: checked });
     }
 
     render(){
-        const { task } = this.props;
+        const { task, active } = this.props;
         const { isDone } = this.state;
         // console.log(task);
 
@@ -32,7 +36,7 @@ class todoItem extends Component {
                     e.stopPropagation();
                     this.handleTaskClick(task)
                 }
-                } style={task.status ? {borderLeft: "6px solid chartreuse"} : {}}>
+                } style={active ? {borderLeft: "6px solid chartreuse"} : {}}>
                     <div className="task-title" >
                         {task.title}
                     </div>
