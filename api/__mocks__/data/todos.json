@@ -1,0 +1,18 @@
+{
+    "data": [
+        {
+            "_id": "61a8eca1bd437f4e7c7556d9",
+            "id": "TASK_90fac17f040315fc718dd0fbcd53",
+            "title": "çöpleri boşalt",
+            "desc": "2 adet torba kullan",
+            "status": false
+        },
+        {
+            "_id": "61a8ebd0bd437f4e7c7556d4",
+            "id": "TASK_435e378464db78beb9261f437998",
+            "title": "çamaşırları yıka",
+            "desc": "2 ölçü",
+            "status": true
+        }
+    ]
+}

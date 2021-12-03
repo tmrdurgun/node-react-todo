@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "test": "env-cmd -f ./test.env jest --verbose --runInBand --detectOpenHandles --no-cache --forceExit"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -23,6 +24,26 @@
   "devDependencies": {
     "cors": "^2.8.5",
     "jest": "^26.0.1",
+    "supertest": "^4.0.2",
+    "@shelf/jest-mongodb": "^1.1.5",
     "env-cmd": "^10.1.0"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "preset": "@shelf/jest-mongodb",
+    "testTimeout": 10000,
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/history/"
+    ]
   }
 }

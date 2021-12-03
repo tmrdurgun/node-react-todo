@@ -49,7 +49,7 @@ class todoItem extends Component {
                     <div className="buttons-container">
 
                     <Checkbox
-                        checked={isDone}
+                        checked={isDone || !task.status}
                         value={task.id}
                         className="yellowCheckbox"
                         onChange={(e) => this.handleCheck(e.target.checked, task)}
