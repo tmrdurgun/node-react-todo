@@ -14,8 +14,11 @@ var app = express();
 app.use(cors());
 require('dotenv').config();
 
+const DB_URL = process.env.DB_URL_DOCKER; // docer mongo service
+// const DB_URL = process.env.DB_URL; // local mongodb server
+
 mongoose
-  .connect(process.env.DB_URL, {
+  .connect(DB_URL, {
     useNewUrlParser: true,
     autoReconnect: true,
     reconnectInterval: 500,
