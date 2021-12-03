@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "env-cmd -f ./test.env jest --verbose --runInBand --detectOpenHandles --no-cache --forceExit"
+    "test": "jest --verbose --runInBand --detectOpenHandles --no-cache --forceExit"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

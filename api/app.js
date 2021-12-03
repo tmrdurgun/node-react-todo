@@ -16,6 +16,7 @@ require('dotenv').config();
 
 const DB_URL = process.env.DB_URL_DOCKER; // docer mongo service
 // const DB_URL = process.env.DB_URL; // local mongodb server
+// const DB_URL = process.env.DB_URL_TEST; // test env db
 
 mongoose
   .connect(DB_URL, {
