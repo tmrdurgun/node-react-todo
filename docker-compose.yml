@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongo-service:
+    image: mongo:4.2.2
+    ports:
+      - "27017:27017"
+  api-service:
+    build: ./api
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongo-service
+  frontend-service:
+    build: ./ui
+    ports:
+      - "3000:80"
+  mongo-import:
+    image: mongo
+    volumes:
+      - ./resources:/var/resources
+    links:
+      - mongo-service:mongo
