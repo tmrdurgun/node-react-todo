@@ -14,9 +14,3 @@ services:
     build: ./ui
     ports:
       - "3000:80"
-  mongo-import:
-    image: mongo
-    volumes:
-      - ./resources:/var/resources
-    links:
-      - mongo-service:mongo
